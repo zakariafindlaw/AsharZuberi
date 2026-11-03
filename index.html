@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Dawat-e-Walima — Ashar Zuberi &amp; Tuba Ikram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0c0906;
+    --near-black:#171109;
+    --maroon-deep:#2e0b11;
+    --maroon:#5c1620;
+    --gold:#c9a15a;
+    --gold-light:#eccb8a;
+    --gold-deep:#8a6a2c;
+    --cream:#f6ead2;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+    background:var(--black);
+    color:var(--cream);
+    overflow-x:hidden;
+  }
+  a{color:inherit;}
+  .script{font-family:'Great Vibes','Brush Script MT',cursive;}
+  .arabic{font-family:'Aref Ruqaa','Amiri',serif;direction:rtl;}
+
+  section{position:relative;padding:76px 26px;text-align:center;overflow:hidden;}
+  .fade-up{opacity:0;transform:translateY(28px);transition:opacity 1s ease,transform 1s ease;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+
+  /* reusable photographic background */
+  .img-bg{
+    position:absolute;inset:-12px;background-size:cover;background-position:center;
+    animation:kenburns 26s ease-in-out infinite alternate;
+  }
+  @keyframes kenburns{0%{transform:scale(1);}100%{transform:scale(1.12);}}
+  .img-overlay{position:absolute;inset:0;}
+  .overlay-hero{background:linear-gradient(180deg,rgba(12,9,6,.32) 0%,rgba(12,9,6,.6) 45%,rgba(12,9,6,.95) 100%);}
+  .overlay-strong{background:linear-gradient(180deg,rgba(12,9,6,.86),rgba(12,9,6,.93));}
+
+  /* subtle gold geometric lattice for non-photo dark sections */
+  .islamic-pattern{
+    position:absolute;inset:0;pointer-events:none;
+    opacity:.55;
+    background-image:conic-gradient(from 45deg at 50% 50%, rgba(201,161,90,.08) 0 25%, transparent 0 50%, rgba(201,161,90,.08) 0 75%, transparent 0 100%);
+    background-size:46px 46px;
+  }
+
+  .divider{
+    width:90px;height:1px;background:var(--gold);
+    margin:18px auto;position:relative;
+  }
+  .divider::before{
+    content:"☾ ✦ ☽";position:absolute;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    background:transparent;color:var(--gold-light);
+    font-size:13px;letter-spacing:4px;padding:0 10px;
+    background-color:var(--black);
+  }
+  .divider.on-maroon::before{background-color:var(--maroon-deep);}
+  .divider.on-image::before{background-color:transparent;}
+
+  /* ===================== OPENER ===================== */
+  #main-content{opacity:0;}
+  #main-content.show{opacity:1;transition:opacity 1s ease;}
+
+  #intro-screen{
+    position:fixed;inset:0;z-index:100;overflow:hidden;cursor:pointer;
+    background:radial-gradient(ellipse at 50% 30%, rgba(92,22,32,.55), transparent 65%),
+                linear-gradient(180deg,var(--near-black) 0%,var(--black) 100%);
+    perspective:1600px;
+    transition:opacity .9s ease, visibility .9s ease;
+  }
+  #intro-screen.gone{opacity:0;visibility:hidden;pointer-events:none;}
+
+  .intro-glow{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:75vmax;height:75vmax;
+    background:radial-gradient(circle,rgba(201,161,90,.22),rgba(201,161,90,0) 60%);
+    z-index:1;
+  }
+
+  /* dark gilded door panels carved with a gold Islamic lattice */
+  .door{
+    position:absolute;top:0;bottom:0;width:52%;z-index:10;
+    background:
+      repeating-conic-gradient(from 45deg, rgba(201,161,90,.14) 0 25%, transparent 0 50%) 0 0/34px 34px,
+      linear-gradient(160deg,#241a10 0%,var(--maroon-deep) 55%,#1a0d10 100%);
+    box-shadow:inset -24px 0 46px rgba(0,0,0,.55), inset 0 0 34px rgba(0,0,0,.4);
+    backface-visibility:hidden;
+    transition:transform 1.35s cubic-bezier(.76,0,.24,1);
+  }
+  .door::after{
+    content:"";position:absolute;inset:14px;border:1px solid rgba(201,161,90,.55);
+  }
+  .door.left{ left:0; transform-origin:left center; border-right:2px solid var(--gold); }
+  .door.right{ right:0; transform-origin:right center; border-left:2px solid var(--gold); }
+  #intro-screen.open .door.left{ transform:rotateY(-102deg); }
+  #intro-screen.open .door.right{ transform:rotateY(102deg); }
+
+  .door-handle{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:28px;height:28px;border-radius:50%;
+    border:4px solid var(--gold);
+    background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.2), rgba(0,0,0,.3));
+    box-shadow:0 2px 8px rgba(0,0,0,.6);
+    z-index:11;
+  }
+  .door.left .door-handle{ right:18px; }
+  .door.right .door-handle{ left:18px; }
+
+  /* invite info, set directly into the gate scene — no card/box behind it */
+  .invite-card{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);
+    z-index:20;width:88%;max-width:320px;max-height:92vh;overflow-y:auto;
+    scrollbar-width:none;-ms-overflow-style:none;
+    text-align:center;cursor:pointer;
+    animation:cardFloat 4s ease-in-out infinite;
+    transition:transform .7s cubic-bezier(.4,.1,.2,1), opacity .6s ease;
+  }
+  .invite-card::-webkit-scrollbar{display:none;}
+  @keyframes cardFloat{0%,100%{transform:translate(-50%,-50%);}50%{transform:translate(-50%,-52%);}}
+  #intro-screen.open .invite-card{ animation:none; opacity:0; transform:translate(-50%,-50%) scale(.88); }
+
+  .intro-ornament-top{position:relative;width:96px;height:48px;margin:0 auto 14px;}
+  .intro-ornament-top::before,.intro-ornament-top::after{
+    content:"";position:absolute;top:2px;width:56%;height:1px;background:var(--gold);
+    opacity:.85;transform-origin:top;
+  }
+  .intro-ornament-top::before{left:0;transform:rotate(30deg);}
+  .intro-ornament-top::after{right:0;transform:rotate(-30deg);}
+  .intro-star-top{position:absolute;top:-9px;left:50%;transform:translateX(-50%);color:var(--gold-light);font-size:15px;text-shadow:0 0 8px rgba(201,161,90,.7);}
+
+  .card-bismillah{font-size:12px;color:var(--gold-light);opacity:.9;letter-spacing:1px;margin-bottom:16px;text-shadow:0 2px 10px rgba(0,0,0,.7);}
+  .card-names{
+    font-family:'Great Vibes','Brush Script MT',cursive;font-size:40px;line-height:1.2;color:#fff;
+    text-shadow:0 3px 18px rgba(0,0,0,.8), 0 0 24px rgba(201,161,90,.25);
+  }
+  .orn-row{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px 0;}
+  .orn-line{width:34px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));opacity:.8;}
+  .orn-line.r{background:linear-gradient(90deg,var(--gold),transparent);}
+  .orn-weds{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);}
+  .orn-star{color:var(--gold-light);font-size:13px;text-shadow:0 0 8px rgba(201,161,90,.6);}
+  .card-tag{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;text-shadow:0 2px 8px rgba(0,0,0,.7);}
+  .card-date{font-size:14px;color:var(--cream);opacity:.92;text-shadow:0 2px 8px rgba(0,0,0,.7);}
+  .card-from-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:7px;}
+  .card-from-name{font-size:16px;color:#fff;margin-bottom:6px;text-shadow:0 2px 8px rgba(0,0,0,.7);}
+  .card-from-addr{font-size:12px;line-height:1.65;color:var(--cream);opacity:.85;max-width:240px;margin:0 auto;}
+  .card-from-phone{font-size:12px;color:var(--cream);opacity:.85;margin-top:7px;}
+  .tap-circle{
+    width:100px;height:100px;border-radius:50%;margin:20px auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:radial-gradient(circle at 35% 30%,var(--gold-light),var(--gold) 55%,#8a6a2c 100%);
+    box-shadow:0 0 0 6px rgba(201,161,90,.16), 0 12px 34px rgba(0,0,0,.6);
+    animation:tapCirclePulse 2.4s ease-in-out infinite;
+    transition:transform .6s cubic-bezier(.3,.6,.3,1.4), opacity .5s ease;
+  }
+  @keyframes tapCirclePulse{0%,100%{transform:scale(1);}50%{transform:scale(1.06);}}
+  .tap-circle .tap-line{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#3a1308;font-weight:600;line-height:1.5;}
+  #intro-screen.open .tap-circle{ animation:none; opacity:0; transform:scale(.55); }
+
+  .intro-burst{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:20px;height:20px;border-radius:50%;
+    background:radial-gradient(circle,#fff 0%,rgba(255,224,170,.85) 35%,rgba(255,224,170,0) 72%);
+    opacity:0;z-index:21;pointer-events:none;
+  }
+  #intro-screen.open .intro-burst{ animation:introBurst 1.2s ease-out .3s forwards; }
+  @keyframes introBurst{0%{opacity:0;width:20px;height:20px;}45%{opacity:1;width:440px;height:440px;}100%{opacity:0;width:540px;height:540px;}}
+
+  .intro-sparkle{position:absolute;inset:0;z-index:15;pointer-events:none;overflow:hidden;}
+  .intro-sparkle i{position:absolute;top:-20px;color:var(--gold-light);opacity:0;font-style:normal;}
+  #intro-screen.open .intro-sparkle i{animation-name:introSparkleFall;animation-timing-function:ease-in;animation-fill-mode:forwards;}
+  @keyframes introSparkleFall{0%{opacity:0;transform:translateY(-20px) rotate(0deg);}15%{opacity:1;}100%{opacity:0;transform:translateY(560px) rotate(200deg);}}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .bismillah{
+    font-family:'Aref Ruqaa','Amiri',serif;direction:rtl;font-size:24px;color:var(--gold-light);
+    margin:0 0 18px;letter-spacing:1px;text-shadow:0 2px 10px rgba(0,0,0,.6);position:relative;z-index:2;
+  }
+  .kicker{position:relative;z-index:2;font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;}
+  .walima-tag{position:relative;z-index:2;font-size:15px;letter-spacing:2px;text-transform:uppercase;color:var(--cream);opacity:.85;margin-bottom:18px;}
+  .hero .names{
+    position:relative;z-index:2;
+    font-family:'Great Vibes','Brush Script MT',cursive;
+    font-size:58px;line-height:1.2;color:#fff;
+    text-shadow:0 3px 18px rgba(0,0,0,.7);
+  }
+  .hero .amp{position:relative;z-index:2;color:var(--gold-light);font-size:30px;display:block;margin:4px 0;}
+  .hero .divider{position:relative;z-index:2;}
+  .hero-sub{position:relative;z-index:2;font-size:14px;color:var(--cream);opacity:.8;max-width:320px;margin:8px auto 0;line-height:1.7;}
+  .scroll-cue{position:relative;z-index:2;margin-top:40px;font-size:11px;letter-spacing:3px;color:var(--gold-light);text-transform:uppercase;}
+  .scroll-cue span{display:block;margin-top:6px;animation:bounce 1.6s ease-in-out infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+  /* INVITATION TEXT */
+  .invite-section{background:linear-gradient(180deg,var(--maroon-deep),var(--black));}
+  .invite-lead{position:relative;z-index:2;font-size:17px;line-height:1.9;max-width:420px;margin:0 auto 6px;color:var(--cream);}
+  .invite-occasion{position:relative;z-index:2;font-family:'Great Vibes','Brush Script MT',cursive;font-size:30px;color:var(--gold-light);margin:18px 0 26px;}
+  .couple-block{position:relative;z-index:2;}
+  .couple-name{font-family:'Great Vibes','Brush Script MT',cursive;font-size:44px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6);margin:2px 0;}
+  .couple-rel{font-size:13px;letter-spacing:.5px;color:var(--gold-light);opacity:.9;margin:2px 0 14px;}
+  .with-word{font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin:6px 0;}
+  .insha{position:relative;z-index:2;margin-top:26px;}
+  .insha .arabic{font-size:22px;color:var(--gold-light);display:block;margin-bottom:4px;}
+  .insha .en{font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--cream);opacity:.8;}
+
+  /* PROGRAMME */
+  .programme-card{
+    position:relative;z-index:2;
+    max-width:360px;margin:20px auto 0;padding:34px 28px;
+    background:rgba(12,9,6,.55);
+    border:1px solid var(--gold);
+    backdrop-filter:blur(2px);
+  }
+  .programme-card::before,
+  .programme-card::after{
+    content:"";position:absolute;width:18px;height:18px;border:1px solid var(--gold);
+  }
+  .programme-card::before{top:8px;left:8px;border-width:1px 0 0 1px;}
+  .programme-card::after{bottom:8px;right:8px;border-width:0 1px 1px 0;}
+  .prog-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-light);margin-bottom:10px;}
+  .prog-date{font-family:'Great Vibes','Brush Script MT',cursive;font-size:32px;color:#fff;margin:4px 0;}
+  .prog-event{font-size:18px;letter-spacing:1px;color:var(--gold-light);margin:10px 0 4px;text-transform:uppercase;}
+  .prog-time{font-size:15px;color:var(--cream);opacity:.85;}
+
+  /* VENUE */
+  .venue-section{background:linear-gradient(180deg,var(--black),var(--maroon-deep));}
+  .venue-title{position:relative;z-index:2;font-family:'Great Vibes','Brush Script MT',cursive;font-size:36px;color:var(--gold-light);}
+  .venue-name{position:relative;z-index:2;font-size:22px;letter-spacing:1px;color:#fff;margin:14px 0 6px;}
+  .venue-address{position:relative;z-index:2;font-size:14px;color:var(--cream);opacity:.85;max-width:320px;margin:0 auto 22px;line-height:1.7;}
+  .map-btn{
+    position:relative;z-index:2;
+    display:inline-block;padding:11px 30px;border:1px solid var(--gold);
+    color:var(--gold-light);text-decoration:none;letter-spacing:2px;font-size:11px;
+    text-transform:uppercase;transition:.3s;
+  }
+  .map-btn:hover{background:var(--gold);color:var(--black);}
+
+  /* FOOTER / RSVP */
+  .rsvp-row{position:relative;z-index:2;display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:22px;}
+  .rsvp-box{
+    min-width:170px;padding:16px 20px;border:1px solid var(--gold);background:rgba(12,9,6,.5);
+  }
+  .rsvp-box .lab{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold-light);margin-bottom:6px;}
+  .rsvp-box .val{font-size:14px;color:var(--cream);}
+  .footer-names{position:relative;z-index:2;font-family:'Great Vibes','Brush Script MT',cursive;font-size:34px;color:var(--gold-light);margin-top:30px;}
+  .footer-note{position:relative;z-index:2;font-size:13px;color:var(--cream);opacity:.75;max-width:320px;margin:10px auto 0;line-height:1.8;}
+
+  @media (max-width:420px){
+    .hero .names{font-size:46px;}
+    .couple-name{font-size:36px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- OPENER -->
+  <div id="intro-screen" onclick="openIntro()">
+    <div class="intro-glow"></div>
+    <div class="door left"><span class="door-handle"></span></div>
+    <div class="door right"><span class="door-handle"></span></div>
+    <div class="intro-burst"></div>
+    <div class="intro-sparkle" id="introSparkle"></div>
+
+    <div class="invite-card">
+      <div class="intro-ornament-top"><span class="intro-star-top">✦</span></div>
+      <p class="card-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      <div class="card-names">Ashar</div>
+      <div class="orn-row"><span class="orn-line"></span><span class="orn-weds">weds</span><span class="orn-line r"></span></div>
+      <div class="card-names">Tuba</div>
+
+      <div class="tap-circle">
+        <span class="tap-line">Tap</span>
+        <span class="tap-line">to Open</span>
+      </div>
+
+      <div class="orn-row"><span class="orn-line"></span><span class="orn-star">✦</span><span class="orn-line r"></span></div>
+      <div class="card-tag">Dawat-e-Walima</div>
+      <div class="card-date">On Monday, 23rd November 2026</div>
+      <div class="orn-row"><span class="orn-line"></span><span class="orn-star">✦</span><span class="orn-line r"></span></div>
+      <div class="card-from-label">From</div>
+      <div class="card-from-name">Khursheed Zuberi</div>
+      <div class="card-from-addr">Firdaus Nagar, Mohan Nagar<br>Near University Gas Godown, Aligarh</div>
+      <div class="card-from-phone">Mob.: 8171661020, 8178585971</div>
+    </div>
+  </div>
+
+  <div id="main-content">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="img-bg" style="background-image:url('https://images.unsplash.com/photo-1769428197774-2dfdffe4a723?auto=format&fit=crop&w=1600&q=75');"></div>
+    <div class="img-overlay overlay-hero"></div>
+    <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <div class="kicker">Insha Allah</div>
+    <div class="walima-tag">Dawat-e-Walima</div>
+    <div class="names">Ashar Zuberi</div>
+    <span class="amp">&amp;</span>
+    <div class="names">Tuba Ikram</div>
+    <div class="divider on-image"></div>
+    <p class="hero-sub">Mrs. &amp; Mr. Khursheed Zuberi request the pleasure<br>of your gracious presence</p>
+    <div class="scroll-cue">Scroll<span>⌄</span></div>
+  </section>
+
+  <!-- INVITATION -->
+  <section class="invite-section fade-up">
+    <div class="islamic-pattern"></div>
+    <p class="invite-lead">Mrs. &amp; Mr. Khursheed Zuberi<br>request the pleasure of your gracious presence<br>on the auspicious occasion of the</p>
+    <div class="invite-occasion">Dawat-e-Walima</div>
+    <p class="invite-lead" style="margin-bottom:22px;">of their son</p>
+
+    <div class="couple-block">
+      <div class="couple-name">Ashar Zuberi</div>
+      <div class="couple-rel">(Grand S/o Mrs. &amp; Mr. R.A. Zuberi)</div>
+      <div class="with-word">with</div>
+      <div class="couple-name">Tuba Ikram</div>
+      <div class="couple-rel">(D/o Mrs. &amp; Mr. Ikram Ilahi)</div>
+    </div>
+
+    <div class="insha">
+      <span class="arabic">إن شاء الله</span>
+      <span class="en">Insha Allah</span>
+    </div>
+  </section>
+
+  <!-- PROGRAMME -->
+  <section class="programme fade-up">
+    <div class="img-bg" style="background-image:url('https://images.unsplash.com/photo-1778754607542-89f546df4b16?auto=format&fit=crop&w=1400&q=75');"></div>
+    <div class="img-overlay overlay-strong"></div>
+    <div class="prog-label" style="position:relative;z-index:2;">Programme</div>
+    <div class="divider on-image"></div>
+    <div class="programme-card">
+      <div class="prog-label">On</div>
+      <div class="prog-date">Monday, 23rd November 2026</div>
+      <div class="prog-event">Dawat-e-Walima</div>
+      <div class="prog-time">Dinner — 8:00 PM</div>
+    </div>
+  </section>
+
+  <!-- VENUE -->
+  <section class="venue-section fade-up">
+    <div class="islamic-pattern"></div>
+    <div class="venue-title">Venue</div>
+    <div class="divider on-maroon"></div>
+    <div class="venue-name">The Gold Residency</div>
+    <p class="venue-address">Near FM Tower, Bypass Road,<br>Manzoorgarhi, Aligarh</p>
+    <a class="map-btn" href="https://www.google.com/maps/search/?api=1&query=The+Gold+Residency%2C+Near+FM+Tower%2C+Bypass+Road%2C+Manzoorgarhi%2C+Aligarh" target="_blank" rel="noopener">Get Directions</a>
+  </section>
+
+  <!-- FOOTER / RSVP -->
+  <section class="footer fade-up">
+    <div class="img-bg" style="background-image:url('https://images.unsplash.com/photo-1758696229365-997adf6e4a1c?auto=format&fit=crop&w=1400&q=75');"></div>
+    <div class="img-overlay overlay-strong"></div>
+    <div class="divider on-image"></div>
+    <div class="rsvp-row">
+      <div class="rsvp-box">
+        <div class="lab">R.S.V.P</div>
+        <div class="val">All Family Members</div>
+      </div>
+      <div class="rsvp-box">
+        <div class="lab">W.B.C.F</div>
+        <div class="val">All Relatives &amp; Friends</div>
+      </div>
+    </div>
+    <div class="footer-names">Ashar &amp; Tuba</div>
+    <p class="footer-note">With hearts full of gratitude, we warmly invite you<br>to share in our joy on this blessed evening.</p>
+  </section>
+
+  </div>
+
+<script>
+  function revealOnScroll(){
+    var items = document.querySelectorAll('.fade-up');
+    if('IntersectionObserver' in window){
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){ entry.target.classList.add('visible'); }
+        });
+      }, {threshold:0.12});
+      items.forEach(function(item){ obs.observe(item); });
+    } else {
+      items.forEach(function(item){ item.classList.add('visible'); });
+    }
+  }
+
+  function buildSparkles(){
+    var el = document.getElementById('introSparkle');
+    if(!el) return;
+    var chars = ['✦','✧','❋'];
+    var html = '';
+    for(var i=0;i<22;i++){
+      var left = Math.random()*100;
+      var size = 10 + Math.random()*10;
+      var dur = 1.6 + Math.random()*1.4;
+      var delay = Math.random()*0.6;
+      var ch = chars[Math.floor(Math.random()*chars.length)];
+      html += '<i style="left:'+left+'%;font-size:'+size+'px;animation-duration:'+dur+'s;animation-delay:'+delay+'s;">'+ch+'</i>';
+    }
+    el.innerHTML = html;
+  }
+  buildSparkles();
+
+  var introOpened = false;
+  function openIntro(){
+    if(introOpened) return;
+    introOpened = true;
+    var intro = document.getElementById('intro-screen');
+    var main = document.getElementById('main-content');
+    intro.classList.add('open');
+    setTimeout(function(){
+      intro.classList.add('gone');
+      main.classList.add('show');
+      revealOnScroll();
+    }, 1300);
+  }
+</script>
+
+</body>
+</html>
